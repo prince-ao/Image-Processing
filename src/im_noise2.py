@@ -160,7 +160,7 @@ class ImageNoise:
         noise = np.random.normal(mean, varience, size=(im.shape[0], im.shape[1]))
 
         r, g, b = util.split_rgb(im)
-        util.save_rgb(r, g, b, "interior1_red.jpg", "interior_green.jpg", "interior_blue.jpg")
+        util.save_rgb(r, g, b, "interior3_red.jpg", "interior3_green.jpg", "interior3_blue.jpg")
 
         r = r.astype(np.float64)
         g = g.astype(np.float64)
@@ -168,10 +168,10 @@ class ImageNoise:
         r += noise
         g += noise
         b += noise
-        util.save_rgb(r, g, b, "interior1_red_noise.jpg", "inerior_green_noise.jpg", "interior_blue_noise.jpg")
+        util.save_rgb(r, g, b, "interior3_red_noise.jpg", "interior3_green_noise.jpg", "interior3_blue_noise.jpg")
 
         result = util.combine_rgb(r, g, b)
-        util.save(result, "interior1_noise.jpg")
+        util.save(result, "interior3_noise.jpg")
         return result
     
     def gen_salt_and_pepper(self, im: np.ndarray, p_salt = 0.1, p_pepper = 0.1):
@@ -296,6 +296,6 @@ class ImageNoise:
 
 imi = ImageNoise()
 util = Utils()
-im = imread("interior1_noise.jpg")
-res = imi.median_filter(im)
-#print(util.histogram_distance(util.generate_histogram(im), util.generate_histogram(im)))
+im = imread("images/interior3.jpg")
+res = imi.gen_gaussian(im, 300, 30)
+print(util.histogram_distance(util.generate_histogram(im), util.generate_histogram(res)))
